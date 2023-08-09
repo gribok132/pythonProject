@@ -39,28 +39,32 @@ for i in range(4):
 
 
 def game_coordinate(): # Узнаем координаты для символа
-    coord_x = int(input("Введите номер строки: "))
-    coord_y = int(input("Введите номер столбца: "))
-    if (0 < coord_x <= 3) and (0 < coord_y <= 3):
-        coord_list = [coord_x, coord_y]
-        return coord_list
-    else:
-        return "Неверные координаты"
+    coord_x = input("Введите номер строки: ")
+    coord_y = input("Введите номер столбца: ")
+    coord_list = [coord_x, coord_y]
+    return coord_list
 
 
 def game(): # Основное тело функции.
     while is_game_over() and not check_victory(game_map):
         list_ = game_coordinate()
         x, y = list_[0], list_[1]
-        char = str(input("Введите символ x или o: "))
-        if game_map[x][y] != '-':
-            print("\nЭта клетка уже занята")
-        elif char == 'x' or char == 'o':
-            game_map[x][y] = char
-            for char in range(4):
-                print(*game_map[char])
+        if not (x.isdigit()) or not (y.isdigit()):
+            print("\nВведите число\n")
+            continue
+        if (0 < int(x) <= 3) and (0 < int(y) <= 3):
+            char = str(input("Введите символ x или o: "))
+            if game_map[int(x)][int(y)] != '-':
+                print("\nЭта клетка уже занята")
+            elif char == 'x' or char == 'o':
+                game_map[int(x)][int(y)] = char
+                for char_ in range(4):
+                    print(*game_map[char_])
+            else:
+                print(f"\nВвод {char} некорректен\n")
         else:
-            print(f"\nВвод {char} некорректен\n")
+            print("\nНеверные координаты\n")
+
     over()
 
 
